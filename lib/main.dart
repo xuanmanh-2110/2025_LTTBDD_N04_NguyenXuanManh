@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/intro_screen.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +18,20 @@ class MyApp extends StatelessWidget {
       title: 'Calorie Tracker',
       debugShowCheckedModeBanner: false,
 
-      //  Cấu hình localization
-      locale: const Locale('vi'),
+      localeResolutionCallback:
+          (deviceLocale, supported) {
+            if (deviceLocale == null)
+              return const Locale('en');
+            final lang =
+                deviceLocale.languageCode;
+            if (supported.any(
+              (l) => l.languageCode == lang,
+            )) {
+              return Locale(lang);
+            }
+            return const Locale('vi');
+          },
+
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -30,7 +43,6 @@ class MyApp extends StatelessWidget {
         Locale('en'),
       ],
 
-      //  Theme
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -39,13 +51,12 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
 
-      //  Màn hình đầu tiên là IntroScreen
       home: const IntroScreen(),
-
-      //  Routes (tạm thời để trống, sẽ thêm sau)
       routes: {
         '/intro': (context) =>
             const IntroScreen(),
+        '/login': (context) =>
+            const LoginScreen(),
       },
     );
   }

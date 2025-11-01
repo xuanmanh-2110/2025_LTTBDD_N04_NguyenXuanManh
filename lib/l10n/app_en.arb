@@ -1,0 +1,21 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Calorie Tracker",
+  "welcome": "Welcome!",
+  "welcomeSubtitle": "Start your health journey today",
+
+  "intro1Title": "Track Calories Easily",
+  "intro1Desc": "Record and manage your daily calories simply",
+  "intro2Title": "Reach Your Goals",
+  "intro2Desc": "Monitor progress and achieve your health goals",
+  "intro3Title": "Maintain Healthy Lifestyle",
+  "intro3Desc": "Track water intake and nutrition every day",
+
+  "next": "Next",
+  "skip": "Skip",
+  "getStarted": "Get Started",
+
+  "login": "Login",
+  "register": "Register"
+}

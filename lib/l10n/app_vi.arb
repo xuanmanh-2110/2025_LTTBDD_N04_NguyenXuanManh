@@ -1,0 +1,21 @@
+{
+  "@@locale": "vi",
+
+  "appTitle": "Calorie Tracker",
+  "welcome": "Chào mừng bạn!",
+  "welcomeSubtitle": "Hãy bắt đầu hành trình sức khỏe của bạn",
+
+  "intro1Title": "Theo dõi calo dễ dàng",
+  "intro1Desc": "Ghi nhận và quản lý lượng calo hàng ngày một cách đơn giản",
+  "intro2Title": "Đạt mục tiêu của bạn",
+  "intro2Desc": "Theo dõi tiến trình và đạt được mục tiêu sức khỏe",
+  "intro3Title": "Duy trì lối sống lành mạnh",
+  "intro3Desc": "Theo dõi nước uống và dinh dưỡng mỗi ngày",
+
+  "next": "Tiếp",
+  "skip": "Bỏ qua",
+  "getStarted": "Bắt đầu ngay",
+
+  "login": "Đăng nhập",
+  "register": "Đăng ký"
+}

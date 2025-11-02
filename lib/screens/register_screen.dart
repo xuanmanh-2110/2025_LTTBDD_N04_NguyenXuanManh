@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -46,7 +47,126 @@ class _RegisterScreenState
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(
+              right: 16,
+              top: 8,
+              bottom: 8,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(
+                20,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(
+                    alpha: 0.1,
+                  ),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () => MyApp.of(context)
+                      ?.setLocale(
+                        const Locale('vi'),
+                      ),
+                  borderRadius:
+                      const BorderRadius.horizontal(
+                        left: Radius.circular(20),
+                      ),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                    decoration: BoxDecoration(
+                      color: isVietnamese
+                          ? const Color(
+                              0xFF4CAF50,
+                            )
+                          : Colors.transparent,
+                      borderRadius:
+                          const BorderRadius.horizontal(
+                            left: Radius.circular(
+                              20,
+                            ),
+                          ),
+                    ),
+                    child: Text(
+                      'VI',
+                      style: TextStyle(
+                        color: isVietnamese
+                            ? Colors.white
+                            : Colors.grey[700],
+                        fontWeight:
+                            FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 1,
+                  height: 16,
+                  color: Colors.grey[300],
+                ),
+                InkWell(
+                  onTap: () => MyApp.of(context)
+                      ?.setLocale(
+                        const Locale('en'),
+                      ),
+                  borderRadius:
+                      const BorderRadius.horizontal(
+                        right: Radius.circular(
+                          20,
+                        ),
+                      ),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                    decoration: BoxDecoration(
+                      color: !isVietnamese
+                          ? const Color(
+                              0xFF4CAF50,
+                            )
+                          : Colors.transparent,
+                      borderRadius:
+                          const BorderRadius.horizontal(
+                            right:
+                                Radius.circular(
+                                  20,
+                                ),
+                          ),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: TextStyle(
+                        color: !isVietnamese
+                            ? Colors.white
+                            : Colors.grey[700],
+                        fontWeight:
+                            FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),

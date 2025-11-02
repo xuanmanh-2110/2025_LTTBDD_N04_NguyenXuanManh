@@ -244,6 +244,37 @@ class _RegisterScreenState
                 ),
               ),
               const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
+                children: [
+                  Text(
+                    isVietnamese
+                        ? 'Đã có tài khoản? '
+                        : 'Already have an account? ',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(
+                      context,
+                    ).pop(),
+                    child: Text(
+                      isVietnamese
+                          ? 'Đăng Nhập'
+                          : 'Login',
+                      style: const TextStyle(
+                        color: Color(0xFF4CAF50),
+                        fontSize: 14,
+                        fontWeight:
+                            FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

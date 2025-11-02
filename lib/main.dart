@@ -9,29 +9,37 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => MyAppState();
+
+  //Method để access state từ bên ngoài
+  static MyAppState? of(BuildContext context) {
+    return context
+        .findAncestorStateOfType<MyAppState>();
+  }
+}
+
+class MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('vi');
+
+  //Method để đổi ngôn ngữ
+  void setLocale(Locale locale) {
+    if (mounted && _locale != locale) {
+      setState(() {
+        _locale = locale;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Calorie Tracker',
       debugShowCheckedModeBanner: false,
-
-      localeResolutionCallback:
-          (deviceLocale, supported) {
-            if (deviceLocale == null)
-              return const Locale('en');
-            final lang =
-                deviceLocale.languageCode;
-            if (supported.any(
-              (l) => l.languageCode == lang,
-            )) {
-              return Locale(lang);
-            }
-            return const Locale('vi');
-          },
-
+      locale: _locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -42,7 +50,6 @@ class MyApp extends StatelessWidget {
         Locale('vi'),
         Locale('en'),
       ],
-
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -50,7 +57,6 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-
       home: const IntroScreen(),
       routes: {
         '/intro': (context) =>

@@ -15,7 +15,7 @@ class _LoginScreenState
   final _passwordController =
       TextEditingController();
   bool _obscurePassword =
-      true; // Ẩn/hiện mật khẩu
+      true; // chỉ để đổi icon hiển/ẩn cục bộ
 
   @override
   void dispose() {
@@ -41,7 +41,104 @@ class _LoginScreenState
             crossAxisAlignment:
                 CrossAxisAlignment.stretch,
             children: [
+              // VI/EN
+              Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.end,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.circular(
+                            20,
+                          ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black
+                              .withValues(
+                                alpha: 0.1,
+                              ),
+                          blurRadius: 8,
+                          offset: const Offset(
+                            0,
+                            2,
+                          ),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        // VI
+                        Container(
+                          padding:
+                              const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                          decoration: const BoxDecoration(
+                            color: Color(
+                              0xFF4CAF50,
+                            ),
+                            borderRadius:
+                                BorderRadius.horizontal(
+                                  left:
+                                      Radius.circular(
+                                        20,
+                                      ),
+                                ),
+                          ),
+                          child: const Text(
+                            'VI',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight:
+                                  FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 20,
+                          color: Colors.grey[300],
+                        ),
+                        // EN
+                        Container(
+                          padding:
+                              const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                          decoration: const BoxDecoration(
+                            color: Colors
+                                .transparent,
+                            borderRadius:
+                                BorderRadius.horizontal(
+                                  right:
+                                      Radius.circular(
+                                        20,
+                                      ),
+                                ),
+                          ),
+                          child: Text(
+                            'EN',
+                            style: TextStyle(
+                              color: Colors
+                                  .grey[700],
+                              fontWeight:
+                                  FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 24),
+
               // Logo
               Container(
                 width: 100,
@@ -85,7 +182,7 @@ class _LoginScreenState
               ),
               const SizedBox(height: 40),
 
-              // Form đăng nhập
+              // Form
               Column(
                 children: [
                   TextField(
@@ -193,6 +290,35 @@ class _LoginScreenState
                 ],
               ),
               const SizedBox(height: 24),
+
+              // Register
+              Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
+                children: [
+                  Text(
+                    isVietnamese
+                        ? 'Chưa có tài khoản? '
+                        : "Don't have an account? ",
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    isVietnamese
+                        ? 'Đăng ký ngay'
+                        : 'Register Now',
+                    style: const TextStyle(
+                      color: Color(0xFF4CAF50),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      decoration:
+                          TextDecoration.none,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

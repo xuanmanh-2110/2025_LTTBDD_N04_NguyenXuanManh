@@ -5,6 +5,7 @@ import 'l10n/app_localizations.dart';
 import 'screens/intro_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
+import 'screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => MyAppState();
 
-  //Method để access state từ bên ngoài
+  // Method để access state từ bên ngoài
   static MyAppState? of(BuildContext context) {
     return context
         .findAncestorStateOfType<MyAppState>();
@@ -26,7 +27,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Locale _locale = const Locale('vi');
 
-  //Method để đổi ngôn ngữ
+  // Method để đổi ngôn ngữ
   void setLocale(Locale locale) {
     if (mounted && _locale != locale) {
       setState(() {
@@ -66,6 +67,8 @@ class MyAppState extends State<MyApp> {
             const LoginScreen(),
         '/register': (context) =>
             const RegisterScreen(),
+        '/welcome': (context) =>
+            const WelcomeScreen(),
       },
     );
   }

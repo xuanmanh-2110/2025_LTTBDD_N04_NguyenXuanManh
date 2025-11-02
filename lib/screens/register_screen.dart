@@ -18,8 +18,20 @@ class _RegisterScreenState
       TextEditingController();
   final _confirmController =
       TextEditingController();
+
   bool _obscure1 = true;
   bool _obscure2 = true;
+
+  bool _canSubmit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.addListener(_revalidate);
+    _emailController.addListener(_revalidate);
+    _passwordController.addListener(_revalidate);
+    _confirmController.addListener(_revalidate);
+  }
 
   @override
   void dispose() {
@@ -28,6 +40,47 @@ class _RegisterScreenState
     _passwordController.dispose();
     _confirmController.dispose();
     super.dispose();
+  }
+
+  void _revalidate() {
+    final nameOk = _nameController.text
+        .trim()
+        .isNotEmpty;
+
+    final email = _emailController.text.trim();
+    final emailOk = RegExp(
+      r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+    ).hasMatch(email);
+
+    final pass = _passwordController.text;
+    final passOk = pass.length >= 6;
+
+    final confirmOk =
+        _confirmController.text == pass;
+
+    final ok =
+        nameOk && emailOk && passOk && confirmOk;
+    if (_canSubmit != ok && mounted) {
+      setState(() => _canSubmit = ok);
+    }
+  }
+
+  void _submitDemo() {
+    final isVietnamese =
+        Localizations.localeOf(
+          context,
+        ).languageCode ==
+        'vi';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          isVietnamese
+              ? 'kiểm tra hợp lệ, chưa tạo tài khoản.'
+              : 'validated only, no account created.',
+        ),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   @override
@@ -174,7 +227,6 @@ class _RegisterScreenState
             crossAxisAlignment:
                 CrossAxisAlignment.stretch,
             children: [
-              // Logo/Icon
               Container(
                 width: 100,
                 height: 100,
@@ -191,8 +243,6 @@ class _RegisterScreenState
                 ),
               ),
               const SizedBox(height: 32),
-
-              // Title & subtitle
               Text(
                 isVietnamese
                     ? 'Tạo tài khoản'
@@ -216,8 +266,6 @@ class _RegisterScreenState
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
-
-              // Form
               TextField(
                 controller: _nameController,
                 textInputAction:
@@ -332,13 +380,11 @@ class _RegisterScreenState
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Button
               SizedBox(
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: _submitDemo,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(
                       0xFF4CAF50,

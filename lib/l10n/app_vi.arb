@@ -17,5 +17,17 @@
   "getStarted": "Bắt đầu ngay",
 
   "login": "Đăng nhập",
-  "register": "Đăng ký"
+  "register": "Đăng ký",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "forgotPassword": "Quên mật khẩu?",
+  "dontHaveAccount": "Chưa có tài khoản?",
+  "registerNow": "Đăng ký ngay",
+
+  "errorEmptyEmail": "Vui lòng nhập email",
+  "errorInvalidEmail": "Email không hợp lệ",
+  "errorEmptyPassword": "Vui lòng nhập mật khẩu",
+
+  "vietnamese": "Tiếng Việt",
+  "english": "English"
 }

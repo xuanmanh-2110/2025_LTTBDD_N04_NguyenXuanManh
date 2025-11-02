@@ -1,3 +1,4 @@
+
 {
   "@@locale": "en",
 
@@ -17,5 +18,17 @@
   "getStarted": "Get Started",
 
   "login": "Login",
-  "register": "Register"
+  "register": "Register",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot Password?",
+  "dontHaveAccount": "Don't have an account?",
+  "registerNow": "Register Now",
+
+  "errorEmptyEmail": "Please enter your email",
+  "errorInvalidEmail": "Invalid email",
+  "errorEmptyPassword": "Please enter your password",
+
+  "vietnamese": "Tiếng Việt",
+  "english": "English"
 }

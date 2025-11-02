@@ -49,4 +49,34 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get register => 'Đăng ký';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Mật khẩu';
+
+  @override
+  String get forgotPassword => 'Quên mật khẩu?';
+
+  @override
+  String get dontHaveAccount => 'Chưa có tài khoản?';
+
+  @override
+  String get registerNow => 'Đăng ký ngay';
+
+  @override
+  String get errorEmptyEmail => 'Vui lòng nhập email';
+
+  @override
+  String get errorInvalidEmail => 'Email không hợp lệ';
+
+  @override
+  String get errorEmptyPassword => 'Vui lòng nhập mật khẩu';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get english => 'English';
 }

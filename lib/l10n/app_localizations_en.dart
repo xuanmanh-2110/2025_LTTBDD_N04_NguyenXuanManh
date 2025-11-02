@@ -49,4 +49,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get register => 'Register';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get registerNow => 'Register Now';
+
+  @override
+  String get errorEmptyEmail => 'Please enter your email';
+
+  @override
+  String get errorInvalidEmail => 'Invalid email';
+
+  @override
+  String get errorEmptyPassword => 'Please enter your password';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get english => 'English';
 }

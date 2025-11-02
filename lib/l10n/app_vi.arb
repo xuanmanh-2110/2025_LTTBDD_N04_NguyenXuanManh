@@ -1,33 +1,109 @@
 {
   "@@locale": "vi",
-
+  
   "appTitle": "Calorie Tracker",
+  
   "welcome": "Chào mừng bạn!",
   "welcomeSubtitle": "Hãy bắt đầu hành trình sức khỏe của bạn",
-
+  "personalInfo": "Thông tin cá nhân",
+  "fullName": "Họ và tên",
+  "height": "Chiều cao (cm)",
+  "weight": "Cân nặng (kg)",
+  "getStarted": "Bắt đầu ngay",
+  
+  "mainFeatures": "Tính năng chính",
+  "trackCalories": "Theo dõi calo",
+  "trackCaloriesDesc": "Ghi nhận và tính toán lượng calo nạp vào",
+  "waterReminder": "Nhắc uống nước",
+  "waterReminderDesc": "Theo dõi lượng nước uống hàng ngày",
+  "calculateBMI": "Tính BMI",
+  "calculateBMIDesc": "Theo dõi chỉ số BMI và sức khỏe",
+  
+  "journal": "Nhật ký",
+  "favorites": "Yêu thích",
+  "personal": "Cá nhân",
+  
+  "todayJournal": "Nhật ký hôm nay",
+  "totalCaloriesNeeded": "Tổng kcal cần nạp",
+  "consumed": "Đã nạp",
+  "macroNutrients": "Macro dinh dưỡng",
+  "waterIntake": "Nước đã uống",
+  
+  "addFood": "Thêm món ăn",
+  "addWater": "Thêm nước",
+  "selectFood": "Chọn món ăn",
+  "selectWaterAmount": "Chọn lượng nước",
+  "customInput": "Nhập tùy chỉnh",
+  "enterMl": "Nhập ml",
+  "add": "Thêm",
+  
+  "favoritesComingSoon": "Tính năng này sẽ sớm có mặt!",
+  "favoritesDesc": "Lưu trữ các món ăn và công thức yêu thích của bạn",
+  "comingSoon": "Sắp ra mắt",
+  "comingSoonDesc": "Theo dõi các món ăn yêu thích\nvà tạo thực đơn cá nhân hóa",
+  
+  "bmi": "BMI",
+  "heightLabel": "Chiều cao",
+  "weightLabel": "Cân nặng",
+  "yourBMI": "BMI của bạn",
+  "updateWeight": "Cập nhật cân nặng",
+  "waterGoal": "Mục tiêu nước",
+  "shouldDrinkDaily": "Nên uống mỗi ngày",
+  "customizeGoal": "Tùy chỉnh mục tiêu",
+  "lastUpdated": "Lần cuối cập nhật",
+  
+  "underweight": "Thiếu cân",
+  "normal": "Bình thường",
+  "overweight": "Thừa cân",
+  "obese": "Béo phì",
+  
+  "settings": "Cài đặt",
+  "account": "Tài khoản",
+  "language": "Ngôn ngữ",
+  "logout": "Đăng xuất",
+  "logoutConfirm": "Bạn có chắc muốn đăng xuất?",
+  "cancel": "Hủy",
+  "confirm": "Xác nhận",
+  "save": "Lưu",
+  
+  "login": "Đăng nhập",
+  "register": "Đăng ký",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "confirmPassword": "Xác nhận mật khẩu",
+  "forgotPassword": "Quên mật khẩu?",
+  "dontHaveAccount": "Chưa có tài khoản?",
+  "alreadyHaveAccount": "Đã có tài khoản?",
+  "loginNow": "Đăng nhập ngay",
+  "registerNow": "Đăng ký ngay",
+  
   "intro1Title": "Theo dõi calo dễ dàng",
   "intro1Desc": "Ghi nhận và quản lý lượng calo hàng ngày một cách đơn giản",
   "intro2Title": "Đạt mục tiêu của bạn",
   "intro2Desc": "Theo dõi tiến trình và đạt được mục tiêu sức khỏe",
   "intro3Title": "Duy trì lối sống lành mạnh",
   "intro3Desc": "Theo dõi nước uống và dinh dưỡng mỗi ngày",
-
   "next": "Tiếp",
   "skip": "Bỏ qua",
-  "getStarted": "Bắt đầu ngay",
-
-  "login": "Đăng nhập",
-  "register": "Đăng ký",
-  "email": "Email",
-  "password": "Mật khẩu",
-  "forgotPassword": "Quên mật khẩu?",
-  "dontHaveAccount": "Chưa có tài khoản?",
-  "registerNow": "Đăng ký ngay",
-
+  "done": "Hoàn thành",
+  
+  "errorEmptyName": "Vui lòng nhập họ và tên",
+  "errorEmptyHeight": "Vui lòng nhập chiều cao",
+  "errorInvalidHeight": "Chiều cao không hợp lệ",
+  "errorEmptyWeight": "Vui lòng nhập cân nặng",
+  "errorInvalidWeight": "Cân nặng không hợp lệ",
   "errorEmptyEmail": "Vui lòng nhập email",
   "errorInvalidEmail": "Email không hợp lệ",
   "errorEmptyPassword": "Vui lòng nhập mật khẩu",
-
+  "errorPasswordTooShort": "Mật khẩu phải có ít nhất 6 ký tự",
+  "errorPasswordNotMatch": "Mật khẩu không khớp",
+  
   "vietnamese": "Tiếng Việt",
-  "english": "English"
+  "english": "English",
+  
+  "age": "Tuổi",
+  "ageYears": "Tuổi (năm)",
+  "gender": "Giới tính",
+  "male": "Nam",
+  "female": "Nữ"
 }

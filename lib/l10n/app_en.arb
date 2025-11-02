@@ -1,34 +1,109 @@
-
 {
   "@@locale": "en",
-
+  
   "appTitle": "Calorie Tracker",
+  
   "welcome": "Welcome!",
   "welcomeSubtitle": "Start your health journey today",
-
+  "personalInfo": "Personal Information",
+  "fullName": "Full Name",
+  "height": "Height (cm)",
+  "weight": "Weight (kg)",
+  "getStarted": "Get Started",
+  
+  "mainFeatures": "Main Features",
+  "trackCalories": "Track Calories",
+  "trackCaloriesDesc": "Record and calculate your daily calorie intake",
+  "waterReminder": "Water Reminder",
+  "waterReminderDesc": "Track your daily water intake",
+  "calculateBMI": "Calculate BMI",
+  "calculateBMIDesc": "Monitor your BMI and health status",
+  
+  "journal": "Journal",
+  "favorites": "Favorites",
+  "personal": "Personal",
+  
+  "todayJournal": "Today's Journal",
+  "totalCaloriesNeeded": "Total Calories Needed",
+  "consumed": "Consumed",
+  "macroNutrients": "Macro Nutrients",
+  "waterIntake": "Water Intake",
+  
+  "addFood": "Add Food",
+  "addWater": "Add Water",
+  "selectFood": "Select Food",
+  "selectWaterAmount": "Select Water Amount",
+  "customInput": "Custom Input",
+  "enterMl": "Enter ml",
+  "add": "Add",
+  
+  "favoritesComingSoon": "This feature is coming soon!",
+  "favoritesDesc": "Save your favorite foods and recipes",
+  "comingSoon": "Coming Soon",
+  "comingSoonDesc": "Track your favorite foods\nand create personalized meal plans",
+  
+  "bmi": "BMI",
+  "heightLabel": "Height",
+  "weightLabel": "Weight",
+  "yourBMI": "Your BMI",
+  "updateWeight": "Update Weight",
+  "waterGoal": "Water Goal",
+  "shouldDrinkDaily": "Daily Recommendation",
+  "customizeGoal": "Customize Goal",
+  "lastUpdated": "Last Updated",
+  
+  "underweight": "Underweight",
+  "normal": "Normal",
+  "overweight": "Overweight",
+  "obese": "Obese",
+  
+  "settings": "Settings",
+  "account": "Account",
+  "language": "Language",
+  "logout": "Logout",
+  "logoutConfirm": "Are you sure you want to logout?",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save",
+  
+  "login": "Login",
+  "register": "Register",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "forgotPassword": "Forgot Password?",
+  "dontHaveAccount": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account?",
+  "loginNow": "Login Now",
+  "registerNow": "Register Now",
+  
   "intro1Title": "Track Calories Easily",
   "intro1Desc": "Record and manage your daily calories simply",
   "intro2Title": "Reach Your Goals",
   "intro2Desc": "Monitor progress and achieve your health goals",
   "intro3Title": "Maintain Healthy Lifestyle",
   "intro3Desc": "Track water intake and nutrition every day",
-
   "next": "Next",
   "skip": "Skip",
-  "getStarted": "Get Started",
-
-  "login": "Login",
-  "register": "Register",
-  "email": "Email",
-  "password": "Password",
-  "forgotPassword": "Forgot Password?",
-  "dontHaveAccount": "Don't have an account?",
-  "registerNow": "Register Now",
-
+  "done": "Done",
+  
+  "errorEmptyName": "Please enter your name",
+  "errorEmptyHeight": "Please enter your height",
+  "errorInvalidHeight": "Invalid height",
+  "errorEmptyWeight": "Please enter your weight",
+  "errorInvalidWeight": "Invalid weight",
   "errorEmptyEmail": "Please enter your email",
   "errorInvalidEmail": "Invalid email",
   "errorEmptyPassword": "Please enter your password",
-
+  "errorPasswordTooShort": "Password must be at least 6 characters",
+  "errorPasswordNotMatch": "Passwords do not match",
+  
   "vietnamese": "Tiếng Việt",
-  "english": "English"
+  "english": "English",
+  
+  "age": "Age",
+  "ageYears": "Age (years)",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female"
 }

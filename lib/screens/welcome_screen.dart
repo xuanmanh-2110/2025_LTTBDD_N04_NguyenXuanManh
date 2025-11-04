@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../l10n/app_localizations.dart';
+import '../models/user_profile.dart';
+import '../services/storage_service.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -12,6 +14,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState
     extends State<WelcomeScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _heightController =
       TextEditingController();
@@ -22,6 +25,7 @@ class _WelcomeScreenState
   String _selectedGender = 'male';
   String _selectedGoal = 'maintain';
   String _selectedActivity = 'sedentary';
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -32,16 +36,68 @@ class _WelcomeScreenState
     super.dispose();
   }
 
-  void _demoOnly() {
-    final l10n = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '${l10n.welcome}: UI demo only, no save.',
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+  Future<void> _saveProfileAndContinue() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final name = _nameController.text.trim();
+      final height = double.parse(
+        _heightController.text,
+      );
+      final weight = double.parse(
+        _weightController.text,
+      );
+      final age = int.parse(_ageController.text);
+
+      // Calculate water goal: 35ml × weight
+      final waterGoal = (35 * weight).round();
+
+      final profile = UserProfile(
+        name: name,
+        height: height,
+        weight: weight,
+        age: age,
+        gender: _selectedGender,
+        goal: _selectedGoal,
+        activityLevel: _selectedActivity,
+        waterGoal: waterGoal,
+        lastUpdated: DateTime.now(),
+      );
+
+      final storageService = StorageService();
+      await storageService.saveUserProfile(
+        profile,
+      );
+
+      if (mounted) {
+        Navigator.of(
+          context,
+        ).pushReplacementNamed('/main');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -59,7 +115,7 @@ class _WelcomeScreenState
             children: [
               const SizedBox(height: 20),
 
-              // Logo & title
+              // Logo and title
               Center(
                 child: Column(
                   children: [
@@ -107,153 +163,257 @@ class _WelcomeScreenState
 
               const SizedBox(height: 32),
 
-              // Personal info (TextField UI-only, KHÔNG validator)
-              _buildSectionTitle(
-                l10n.personalInfo,
-              ),
-              const SizedBox(height: 16),
-
-              _buildTextField(
-                controller: _nameController,
-                label: l10n.fullName,
-                icon: Icons.person,
-              ),
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildTextField(
-                      controller: _ageController,
-                      label: l10n.age,
-                      icon: Icons.cake,
-                      keyboardType:
-                          TextInputType.number,
+              // Form
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
+                    // Personal Info Section
+                    _buildSectionTitle(
+                      l10n.personalInfo,
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildTextField(
-                      controller:
-                          _heightController,
-                      label:
-                          '${l10n.heightLabel} (cm)',
-                      icon: Icons.height,
-                      keyboardType:
-                          TextInputType.number,
+                    const SizedBox(height: 16),
+
+                    _buildTextField(
+                      controller: _nameController,
+                      label: l10n.fullName,
+                      icon: Icons.person,
+                      validator: (value) {
+                        if (value == null ||
+                            value
+                                .trim()
+                                .isEmpty) {
+                          return l10n
+                              .errorEmptyName;
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
+                    const SizedBox(height: 12),
 
-              _buildTextField(
-                controller: _weightController,
-                label: '${l10n.weightLabel} (kg)',
-                icon: Icons.monitor_weight,
-                keyboardType:
-                    TextInputType.number,
-              ),
-
-              const SizedBox(height: 24),
-
-              // Gender
-              _buildSectionTitle(l10n.gender),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildGenderButton(
-                      label: l10n.male,
-                      icon: Icons.male,
-                      value: 'male',
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildGenderButton(
-                      label: l10n.female,
-                      icon: Icons.female,
-                      value: 'female',
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              // Goal
-              _buildSectionTitle(l10n.yourGoal),
-              const SizedBox(height: 12),
-              _buildGoalCard(
-                title: l10n.loseWeight,
-                subtitle: l10n.loseWeightDesc,
-                icon: Icons.trending_down,
-                value: 'lose',
-                color: Colors.orange,
-              ),
-              const SizedBox(height: 12),
-              _buildGoalCard(
-                title: l10n.maintainWeight,
-                subtitle: l10n.maintainWeightDesc,
-                icon: Icons.horizontal_rule,
-                value: 'maintain',
-                color: Colors.blue,
-              ),
-              const SizedBox(height: 12),
-              _buildGoalCard(
-                title: l10n.gainWeight,
-                subtitle: l10n.gainWeightDesc,
-                icon: Icons.trending_up,
-                value: 'gain',
-                color: Colors.green,
-              ),
-
-              const SizedBox(height: 24),
-
-              // Activity
-              _buildSectionTitle(
-                l10n.activityLevel,
-              ),
-              const SizedBox(height: 12),
-              _buildActivityDropdown(l10n),
-
-              const SizedBox(height: 32),
-
-              // Start Button — UI-only
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  // CHỌN 1: disable hẳn (UI thuần & không bấm được):
-                  // onPressed: null,
-
-                  // CHỌN 2: cho bấm để hiện SnackBar demo:
-                  onPressed: _demoOnly,
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(
-                      0xFF4CAF50,
-                    ),
-                    foregroundColor: Colors.white,
-                    padding:
-                        const EdgeInsets.symmetric(
-                          vertical: 16,
-                        ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(
-                            12,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildTextField(
+                            controller:
+                                _ageController,
+                            label: l10n.age,
+                            icon: Icons.cake,
+                            keyboardType:
+                                TextInputType
+                                    .number,
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty) {
+                                return l10n
+                                    .errorEmptyAge;
+                              }
+                              final age =
+                                  int.tryParse(
+                                    value,
+                                  );
+                              if (age == null ||
+                                  age < 10 ||
+                                  age > 120) {
+                                return l10n
+                                    .errorInvalidAge;
+                              }
+                              return null;
+                            },
                           ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildTextField(
+                            controller:
+                                _heightController,
+                            label:
+                                '${l10n.heightLabel} (cm)',
+                            icon: Icons.height,
+                            keyboardType:
+                                TextInputType
+                                    .number,
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty) {
+                                return l10n
+                                    .errorEmptyHeight;
+                              }
+                              final height =
+                                  double.tryParse(
+                                    value,
+                                  );
+                              if (height ==
+                                      null ||
+                                  height <= 0 ||
+                                  height > 300) {
+                                return l10n
+                                    .errorInvalidHeight;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    elevation: 4,
-                  ),
-                  child: Text(
-                    l10n.getStarted,
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    const SizedBox(height: 12),
+
+                    _buildTextField(
+                      controller:
+                          _weightController,
+                      label:
+                          '${l10n.weightLabel} (kg)',
+                      icon: Icons.monitor_weight,
+                      keyboardType:
+                          TextInputType.number,
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return l10n
+                              .errorEmptyWeight;
+                        }
+                        final weight =
+                            double.tryParse(
+                              value,
+                            );
+                        if (weight == null ||
+                            weight <= 0 ||
+                            weight > 500) {
+                          return l10n
+                              .errorInvalidWeight;
+                        }
+                        return null;
+                      },
                     ),
-                  ),
+
+                    const SizedBox(height: 24),
+
+                    // Gender Section
+                    _buildSectionTitle(
+                      l10n.gender,
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child:
+                              _buildGenderButton(
+                                label: l10n.male,
+                                icon: Icons.male,
+                                value: 'male',
+                              ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child:
+                              _buildGenderButton(
+                                label:
+                                    l10n.female,
+                                icon:
+                                    Icons.female,
+                                value: 'female',
+                              ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Goal Section
+                    _buildSectionTitle(
+                      l10n.yourGoal,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildGoalCard(
+                      title: l10n.loseWeight,
+                      subtitle:
+                          l10n.loseWeightDesc,
+                      icon: Icons.trending_down,
+                      value: 'lose',
+                      color: Colors.orange,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildGoalCard(
+                      title: l10n.maintainWeight,
+                      subtitle:
+                          l10n.maintainWeightDesc,
+                      icon: Icons.horizontal_rule,
+                      value: 'maintain',
+                      color: Colors.blue,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildGoalCard(
+                      title: l10n.gainWeight,
+                      subtitle:
+                          l10n.gainWeightDesc,
+                      icon: Icons.trending_up,
+                      value: 'gain',
+                      color: Colors.green,
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Activity Level Section
+                    _buildSectionTitle(
+                      l10n.activityLevel,
+                    ),
+                    const SizedBox(height: 12),
+                    _buildActivityDropdown(l10n),
+
+                    const SizedBox(height: 32),
+
+                    // Start Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _isLoading
+                            ? null
+                            : _saveProfileAndContinue,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(
+                                0xFF4CAF50,
+                              ),
+                          foregroundColor:
+                              Colors.white,
+                          padding:
+                              const EdgeInsets.symmetric(
+                                vertical: 16,
+                              ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                                  12,
+                                ),
+                          ),
+                          elevation: 4,
+                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child:
+                                    CircularProgressIndicator(
+                                      color: Colors
+                                          .white,
+                                      strokeWidth:
+                                          2,
+                                    ),
+                              )
+                            : Text(
+                                l10n.getStarted,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight:
+                                      FontWeight
+                                          .w600,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -279,8 +439,9 @@ class _WelcomeScreenState
     required String label,
     required IconData icon,
     TextInputType? keyboardType,
+    String? Function(String?)? validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -297,6 +458,7 @@ class _WelcomeScreenState
         filled: true,
         fillColor: Colors.white,
       ),
+      validator: validator,
     );
   }
 
@@ -306,9 +468,13 @@ class _WelcomeScreenState
     required String value,
   }) {
     final isSelected = _selectedGender == value;
+
     return InkWell(
-      onTap: () =>
-          setState(() => _selectedGender = value),
+      onTap: () {
+        setState(() {
+          _selectedGender = value;
+        });
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 16,
@@ -359,9 +525,13 @@ class _WelcomeScreenState
     required Color color,
   }) {
     final isSelected = _selectedGoal == value;
+
     return InkWell(
-      onTap: () =>
-          setState(() => _selectedGoal = value),
+      onTap: () {
+        setState(() {
+          _selectedGoal = value;
+        });
+      },
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -482,10 +652,9 @@ class _WelcomeScreenState
           ),
           onChanged: (String? newValue) {
             if (newValue != null) {
-              setState(
-                () =>
-                    _selectedActivity = newValue,
-              );
+              setState(() {
+                _selectedActivity = newValue;
+              });
             }
           },
           items: activities.map((activity) {

@@ -30,34 +30,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weight => 'Weight (kg)';
 
   @override
+  String get heightLabel => 'Height';
+
+  @override
+  String get weightLabel => 'Weight';
+
+  @override
   String get getStarted => 'Get Started';
-
-  @override
-  String get mainFeatures => 'Main Features';
-
-  @override
-  String get trackCalories => 'Track Calories';
-
-  @override
-  String get trackCaloriesDesc => 'Record and calculate your daily calorie intake';
-
-  @override
-  String get waterReminder => 'Water Reminder';
-
-  @override
-  String get waterReminderDesc => 'Track your daily water intake';
-
-  @override
-  String get calculateBMI => 'Calculate BMI';
-
-  @override
-  String get calculateBMIDesc => 'Monitor your BMI and health status';
 
   @override
   String get journal => 'Journal';
 
   @override
-  String get favorites => 'Favorites';
+  String get about => 'About';
 
   @override
   String get personal => 'Personal';
@@ -76,78 +61,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get waterIntake => 'Water Intake';
-
-  @override
-  String get addFood => 'Add Food';
-
-  @override
-  String get addWater => 'Add Water';
-
-  @override
-  String get selectFood => 'Select Food';
-
-  @override
-  String get selectWaterAmount => 'Select Water Amount';
-
-  @override
-  String get customInput => 'Custom Input';
-
-  @override
-  String get enterMl => 'Enter ml';
-
-  @override
-  String get add => 'Add';
-
-  @override
-  String get favoritesComingSoon => 'This feature is coming soon!';
-
-  @override
-  String get favoritesDesc => 'Save your favorite foods and recipes';
-
-  @override
-  String get comingSoon => 'Coming Soon';
-
-  @override
-  String get comingSoonDesc => 'Track your favorite foods\nand create personalized meal plans';
-
-  @override
-  String get bmi => 'BMI';
-
-  @override
-  String get heightLabel => 'Height';
-
-  @override
-  String get weightLabel => 'Weight';
-
-  @override
-  String get yourBMI => 'Your BMI';
-
-  @override
-  String get updateWeight => 'Update Weight';
-
-  @override
-  String get waterGoal => 'Water Goal';
-
-  @override
-  String get shouldDrinkDaily => 'Daily Recommendation';
-
-  @override
-  String get customizeGoal => 'Customize Goal';
-
-  @override
-  String get lastUpdated => 'Last Updated';
-
-  @override
-  String get underweight => 'Underweight';
-
-  @override
-  String get normal => 'Normal';
-
-  @override
-  String get overweight => 'Overweight';
-
-  @override
-  String get obese => 'Obese';
 
   @override
   String get settings => 'Settings';
@@ -172,36 +85,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
-
-  @override
-  String get login => 'Login';
-
-  @override
-  String get register => 'Register';
-
-  @override
-  String get email => 'Email';
-
-  @override
-  String get password => 'Password';
-
-  @override
-  String get confirmPassword => 'Confirm Password';
-
-  @override
-  String get forgotPassword => 'Forgot Password?';
-
-  @override
-  String get dontHaveAccount => 'Don\'t have an account?';
-
-  @override
-  String get alreadyHaveAccount => 'Already have an account?';
-
-  @override
-  String get loginNow => 'Login Now';
-
-  @override
-  String get registerNow => 'Register Now';
 
   @override
   String get intro1Title => 'Track Calories Easily';

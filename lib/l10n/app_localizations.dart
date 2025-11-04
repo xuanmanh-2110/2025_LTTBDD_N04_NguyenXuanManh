@@ -137,53 +137,23 @@ abstract class AppLocalizations {
   /// **'Weight (kg)'**
   String get weight;
 
+  /// No description provided for @heightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get heightLabel;
+
+  /// No description provided for @weightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weightLabel;
+
   /// No description provided for @getStarted.
   ///
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
-
-  /// No description provided for @mainFeatures.
-  ///
-  /// In en, this message translates to:
-  /// **'Main Features'**
-  String get mainFeatures;
-
-  /// No description provided for @trackCalories.
-  ///
-  /// In en, this message translates to:
-  /// **'Track Calories'**
-  String get trackCalories;
-
-  /// No description provided for @trackCaloriesDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Record and calculate your daily calorie intake'**
-  String get trackCaloriesDesc;
-
-  /// No description provided for @waterReminder.
-  ///
-  /// In en, this message translates to:
-  /// **'Water Reminder'**
-  String get waterReminder;
-
-  /// No description provided for @waterReminderDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Track your daily water intake'**
-  String get waterReminderDesc;
-
-  /// No description provided for @calculateBMI.
-  ///
-  /// In en, this message translates to:
-  /// **'Calculate BMI'**
-  String get calculateBMI;
-
-  /// No description provided for @calculateBMIDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Monitor your BMI and health status'**
-  String get calculateBMIDesc;
 
   /// No description provided for @journal.
   ///
@@ -191,11 +161,11 @@ abstract class AppLocalizations {
   /// **'Journal'**
   String get journal;
 
-  /// No description provided for @favorites.
+  /// No description provided for @about.
   ///
   /// In en, this message translates to:
-  /// **'Favorites'**
-  String get favorites;
+  /// **'About'**
+  String get about;
 
   /// No description provided for @personal.
   ///
@@ -232,150 +202,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Water Intake'**
   String get waterIntake;
-
-  /// No description provided for @addFood.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Food'**
-  String get addFood;
-
-  /// No description provided for @addWater.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Water'**
-  String get addWater;
-
-  /// No description provided for @selectFood.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Food'**
-  String get selectFood;
-
-  /// No description provided for @selectWaterAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Water Amount'**
-  String get selectWaterAmount;
-
-  /// No description provided for @customInput.
-  ///
-  /// In en, this message translates to:
-  /// **'Custom Input'**
-  String get customInput;
-
-  /// No description provided for @enterMl.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter ml'**
-  String get enterMl;
-
-  /// No description provided for @add.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get add;
-
-  /// No description provided for @favoritesComingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'This feature is coming soon!'**
-  String get favoritesComingSoon;
-
-  /// No description provided for @favoritesDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Save your favorite foods and recipes'**
-  String get favoritesDesc;
-
-  /// No description provided for @comingSoon.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming Soon'**
-  String get comingSoon;
-
-  /// No description provided for @comingSoonDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Track your favorite foods\nand create personalized meal plans'**
-  String get comingSoonDesc;
-
-  /// No description provided for @bmi.
-  ///
-  /// In en, this message translates to:
-  /// **'BMI'**
-  String get bmi;
-
-  /// No description provided for @heightLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Height'**
-  String get heightLabel;
-
-  /// No description provided for @weightLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight'**
-  String get weightLabel;
-
-  /// No description provided for @yourBMI.
-  ///
-  /// In en, this message translates to:
-  /// **'Your BMI'**
-  String get yourBMI;
-
-  /// No description provided for @updateWeight.
-  ///
-  /// In en, this message translates to:
-  /// **'Update Weight'**
-  String get updateWeight;
-
-  /// No description provided for @waterGoal.
-  ///
-  /// In en, this message translates to:
-  /// **'Water Goal'**
-  String get waterGoal;
-
-  /// No description provided for @shouldDrinkDaily.
-  ///
-  /// In en, this message translates to:
-  /// **'Daily Recommendation'**
-  String get shouldDrinkDaily;
-
-  /// No description provided for @customizeGoal.
-  ///
-  /// In en, this message translates to:
-  /// **'Customize Goal'**
-  String get customizeGoal;
-
-  /// No description provided for @lastUpdated.
-  ///
-  /// In en, this message translates to:
-  /// **'Last Updated'**
-  String get lastUpdated;
-
-  /// No description provided for @underweight.
-  ///
-  /// In en, this message translates to:
-  /// **'Underweight'**
-  String get underweight;
-
-  /// No description provided for @normal.
-  ///
-  /// In en, this message translates to:
-  /// **'Normal'**
-  String get normal;
-
-  /// No description provided for @overweight.
-  ///
-  /// In en, this message translates to:
-  /// **'Overweight'**
-  String get overweight;
-
-  /// No description provided for @obese.
-  ///
-  /// In en, this message translates to:
-  /// **'Obese'**
-  String get obese;
 
   /// No description provided for @settings.
   ///
@@ -424,66 +250,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
-
-  /// No description provided for @login.
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get login;
-
-  /// No description provided for @register.
-  ///
-  /// In en, this message translates to:
-  /// **'Register'**
-  String get register;
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @confirmPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Password'**
-  String get confirmPassword;
-
-  /// No description provided for @forgotPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot Password?'**
-  String get forgotPassword;
-
-  /// No description provided for @dontHaveAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t have an account?'**
-  String get dontHaveAccount;
-
-  /// No description provided for @alreadyHaveAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Already have an account?'**
-  String get alreadyHaveAccount;
-
-  /// No description provided for @loginNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Login Now'**
-  String get loginNow;
-
-  /// No description provided for @registerNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Register Now'**
-  String get registerNow;
 
   /// No description provided for @intro1Title.
   ///

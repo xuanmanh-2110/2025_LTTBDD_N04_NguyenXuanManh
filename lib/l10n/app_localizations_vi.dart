@@ -30,34 +30,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get weight => 'Cân nặng (kg)';
 
   @override
+  String get heightLabel => 'Chiều cao';
+
+  @override
+  String get weightLabel => 'Cân nặng';
+
+  @override
   String get getStarted => 'Bắt đầu ngay';
-
-  @override
-  String get mainFeatures => 'Tính năng chính';
-
-  @override
-  String get trackCalories => 'Theo dõi calo';
-
-  @override
-  String get trackCaloriesDesc => 'Ghi nhận và tính toán lượng calo nạp vào';
-
-  @override
-  String get waterReminder => 'Nhắc uống nước';
-
-  @override
-  String get waterReminderDesc => 'Theo dõi lượng nước uống hàng ngày';
-
-  @override
-  String get calculateBMI => 'Tính BMI';
-
-  @override
-  String get calculateBMIDesc => 'Theo dõi chỉ số BMI và sức khỏe';
 
   @override
   String get journal => 'Nhật ký';
 
   @override
-  String get favorites => 'Yêu thích';
+  String get about => 'Thông tin';
 
   @override
   String get personal => 'Cá nhân';
@@ -75,133 +60,31 @@ class AppLocalizationsVi extends AppLocalizations {
   String get macroNutrients => 'Macro dinh dưỡng';
 
   @override
-  String get waterIntake => 'Nước đã uống';
+  String get waterIntake => 'Water Intake';
 
   @override
-  String get addFood => 'Thêm món ăn';
+  String get settings => 'Settings';
 
   @override
-  String get addWater => 'Thêm nước';
+  String get account => 'Account';
 
   @override
-  String get selectFood => 'Chọn món ăn';
+  String get language => 'Language';
 
   @override
-  String get selectWaterAmount => 'Chọn lượng nước';
+  String get logout => 'Logout';
 
   @override
-  String get customInput => 'Nhập tùy chỉnh';
+  String get logoutConfirm => 'Are you sure you want to logout?';
 
   @override
-  String get enterMl => 'Nhập ml';
+  String get cancel => 'Cancel';
 
   @override
-  String get add => 'Thêm';
+  String get confirm => 'Confirm';
 
   @override
-  String get favoritesComingSoon => 'Tính năng này sẽ sớm có mặt!';
-
-  @override
-  String get favoritesDesc => 'Lưu trữ các món ăn và công thức yêu thích của bạn';
-
-  @override
-  String get comingSoon => 'Sắp ra mắt';
-
-  @override
-  String get comingSoonDesc => 'Theo dõi các món ăn yêu thích\nvà tạo thực đơn cá nhân hóa';
-
-  @override
-  String get bmi => 'BMI';
-
-  @override
-  String get heightLabel => 'Chiều cao';
-
-  @override
-  String get weightLabel => 'Cân nặng';
-
-  @override
-  String get yourBMI => 'BMI của bạn';
-
-  @override
-  String get updateWeight => 'Cập nhật cân nặng';
-
-  @override
-  String get waterGoal => 'Mục tiêu nước';
-
-  @override
-  String get shouldDrinkDaily => 'Nên uống mỗi ngày';
-
-  @override
-  String get customizeGoal => 'Tùy chỉnh mục tiêu';
-
-  @override
-  String get lastUpdated => 'Lần cuối cập nhật';
-
-  @override
-  String get underweight => 'Thiếu cân';
-
-  @override
-  String get normal => 'Bình thường';
-
-  @override
-  String get overweight => 'Thừa cân';
-
-  @override
-  String get obese => 'Béo phì';
-
-  @override
-  String get settings => 'Cài đặt';
-
-  @override
-  String get account => 'Tài khoản';
-
-  @override
-  String get language => 'Ngôn ngữ';
-
-  @override
-  String get logout => 'Đăng xuất';
-
-  @override
-  String get logoutConfirm => 'Bạn có chắc muốn đăng xuất?';
-
-  @override
-  String get cancel => 'Hủy';
-
-  @override
-  String get confirm => 'Xác nhận';
-
-  @override
-  String get save => 'Lưu';
-
-  @override
-  String get login => 'Đăng nhập';
-
-  @override
-  String get register => 'Đăng ký';
-
-  @override
-  String get email => 'Email';
-
-  @override
-  String get password => 'Mật khẩu';
-
-  @override
-  String get confirmPassword => 'Xác nhận mật khẩu';
-
-  @override
-  String get forgotPassword => 'Quên mật khẩu?';
-
-  @override
-  String get dontHaveAccount => 'Chưa có tài khoản?';
-
-  @override
-  String get alreadyHaveAccount => 'Đã có tài khoản?';
-
-  @override
-  String get loginNow => 'Đăng nhập ngay';
-
-  @override
-  String get registerNow => 'Đăng ký ngay';
+  String get save => 'Save';
 
   @override
   String get intro1Title => 'Theo dõi calo dễ dàng';

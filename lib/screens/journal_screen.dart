@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../l10n/app_localizations.dart';
-import '../services/storage_service.dart';
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -13,45 +12,26 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreenState
     extends State<JournalScreen> {
-  final StorageService _storageService =
-      StorageService();
+  final int _todayCalories = 1200;
+  final int _dailyCalorieGoal = 2000;
 
-  int _todayCalories = 0;
-  Map<String, double> _todayMacros = {
-    'carbs': 0,
-    'protein': 0,
-    'fat': 0,
+  final Map<String, double> _todayMacros = const {
+    'carbs': 130,
+    'protein': 60,
+    'fat': 35,
   };
-  int _dailyCalorieGoal = 2000; // mặc định
 
-  @override
-  void initState() {
-    super.initState();
-    _loadTodayData();
-  }
-
-  Future<void> _loadTodayData() async {
-    final calories = await _storageService
-        .getTodayCalorieIntake();
-    final macros = await _storageService
-        .getTodayMacros();
-
-    final profile = await _storageService
-        .getUserProfile();
-
-    setState(() {
-      _todayCalories = calories;
-      _todayMacros = macros;
-      if (profile != null) {
-        _dailyCalorieGoal =
-            profile.dailyCalorieGoal;
-      }
-    });
-  }
+  final int _todayWater = 1200;
+  final int _waterGoal = 2000;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    final perGlass = (_waterGoal / 10);
+    final filledGlasses = (_todayWater / perGlass)
+        .floor()
+        .clamp(0, 10);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5FFF5),
@@ -63,7 +43,6 @@ class _JournalScreenState
               crossAxisAlignment:
                   CrossAxisAlignment.start,
               children: [
-                // Tiêu đề + ngày
                 Text(
                   l10n.todayJournal,
                   style: GoogleFonts.poppins(
@@ -83,8 +62,6 @@ class _JournalScreenState
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Card tổng calo
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(
@@ -138,12 +115,9 @@ class _JournalScreenState
                       const SizedBox(height: 12),
                       LinearProgressIndicator(
                         value:
-                            (_dailyCalorieGoal ==
-                                0)
-                            ? 0
-                            : (_todayCalories /
-                                      _dailyCalorieGoal)
-                                  .clamp(0, 1),
+                            (_todayCalories /
+                                    _dailyCalorieGoal)
+                                .clamp(0.0, 1.0),
                         backgroundColor:
                             Colors.white,
                         valueColor:
@@ -167,8 +141,6 @@ class _JournalScreenState
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                // Card Macros
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(
@@ -232,8 +204,131 @@ class _JournalScreenState
                     ],
                   ),
                 ),
+                const SizedBox(height: 20),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(
+                    20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius:
+                        BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black
+                            .withValues(
+                              alpha: 0.1,
+                            ),
+                        blurRadius: 10,
+                        offset: const Offset(
+                          0,
+                          4,
+                        ),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment
+                                .spaceBetween,
+                        children: [
+                          Text(
+                            l10n.waterIntake,
+                            style:
+                                GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight:
+                                      FontWeight
+                                          .bold,
+                                  color: Colors
+                                      .blue[700],
+                                ),
+                          ),
+                          Icon(
+                            Icons.water_drop,
+                            color:
+                                Colors.blue[700],
+                            size: 24,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        '${(_todayWater / 1000).toStringAsFixed(1)} / ${(_waterGoal / 1000).toStringAsFixed(1)} L',
+                        style:
+                            GoogleFonts.poppins(
+                              fontSize: 20,
+                              fontWeight:
+                                  FontWeight.bold,
+                              color: Colors
+                                  .blue[700],
+                            ),
+                      ),
+                      const SizedBox(height: 16),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics:
+                            const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 5,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              childAspectRatio:
+                                  0.8,
+                            ),
+                        itemCount: 10,
+                        itemBuilder:
+                            (context, index) {
+                              final isFilled =
+                                  index <
+                                  filledGlasses;
+                              return _WaterGlassTile(
+                                isFilled:
+                                    isFilled,
+                                mlPerGlass:
+                                    perGlass
+                                        .round(),
+                              );
+                            },
+                      ),
 
-                const SizedBox(height: 40),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: const [
+                          Expanded(
+                            child:
+                                _DisabledOutlined(
+                                  text:
+                                      'Goal 1.5L',
+                                ),
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child:
+                                _DisabledOutlined(
+                                  text:
+                                      'Goal 2.0L',
+                                ),
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child:
+                                _DisabledOutlined(
+                                  text:
+                                      'Goal 2.5L',
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 80),
               ],
             ),
           ),
@@ -248,10 +343,7 @@ class _JournalScreenState
     double goal,
     Color color,
   ) {
-    final percentage = (current / goal).clamp(
-      0.0,
-      1.0,
-    );
+    final pct = (current / goal).clamp(0.0, 1.0);
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.start,
@@ -278,7 +370,7 @@ class _JournalScreenState
         ),
         const SizedBox(height: 4),
         LinearProgressIndicator(
-          value: percentage,
+          value: pct,
           backgroundColor: Colors.grey[200],
           valueColor:
               AlwaysStoppedAnimation<Color>(
@@ -287,6 +379,78 @@ class _JournalScreenState
           minHeight: 6,
         ),
       ],
+    );
+  }
+}
+
+class _WaterGlassTile extends StatelessWidget {
+  final bool isFilled;
+  final int mlPerGlass;
+
+  const _WaterGlassTile({
+    required this.isFilled,
+    required this.mlPerGlass,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: Column(
+        mainAxisAlignment:
+            MainAxisAlignment.center,
+        children: [
+          AnimatedContainer(
+            duration: const Duration(
+              milliseconds: 0,
+            ),
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+              color: isFilled
+                  ? Colors.blue[700]
+                  : Colors.transparent,
+              border: Border.all(
+                color: isFilled
+                    ? Colors.blue[700]!
+                    : Colors.grey[400]!,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(
+                8,
+              ),
+            ),
+            child: Icon(
+              Icons.local_drink,
+              color: isFilled
+                  ? Colors.white
+                  : Colors.grey[400],
+              size: 28,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '${mlPerGlass}ml',
+            style: GoogleFonts.poppins(
+              fontSize: 10,
+              color: Colors.blue[700],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DisabledOutlined extends StatelessWidget {
+  final String text;
+  const _DisabledOutlined({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: null,
+      child: Text(text),
     );
   }
 }

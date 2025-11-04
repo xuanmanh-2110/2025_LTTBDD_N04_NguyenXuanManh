@@ -640,6 +640,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Female'**
   String get female;
+
+  /// No description provided for @yourGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Goal'**
+  String get yourGoal;
+
+  /// No description provided for @loseWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Lose Weight'**
+  String get loseWeight;
+
+  /// No description provided for @loseWeightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Lose 0.5 kg per week'**
+  String get loseWeightDesc;
+
+  /// No description provided for @maintainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain Weight'**
+  String get maintainWeight;
+
+  /// No description provided for @maintainWeightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep current weight'**
+  String get maintainWeightDesc;
+
+  /// No description provided for @gainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Gain Weight'**
+  String get gainWeight;
+
+  /// No description provided for @gainWeightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Gain 0.5 kg per week'**
+  String get gainWeightDesc;
+
+  /// No description provided for @activityLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Level'**
+  String get activityLevel;
+
+  /// No description provided for @sedentary.
+  ///
+  /// In en, this message translates to:
+  /// **'Sedentary'**
+  String get sedentary;
+
+  /// No description provided for @sedentaryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Little or no exercise'**
+  String get sedentaryDesc;
+
+  /// No description provided for @lightlyActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Lightly Active'**
+  String get lightlyActive;
+
+  /// No description provided for @lightlyActiveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Light exercise 1-3 days/week'**
+  String get lightlyActiveDesc;
+
+  /// No description provided for @moderatelyActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderately Active'**
+  String get moderatelyActive;
+
+  /// No description provided for @moderatelyActiveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate exercise 3-5 days/week'**
+  String get moderatelyActiveDesc;
+
+  /// No description provided for @veryActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Active'**
+  String get veryActive;
+
+  /// No description provided for @veryActiveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard exercise 6-7 days/week'**
+  String get veryActiveDesc;
+
+  /// No description provided for @extraActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra Active'**
+  String get extraActive;
+
+  /// No description provided for @extraActiveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Very hard exercise & physical job'**
+  String get extraActiveDesc;
+
+  /// No description provided for @errorEmptyAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your age'**
+  String get errorEmptyAge;
+
+  /// No description provided for @errorInvalidAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid age'**
+  String get errorInvalidAge;
+
+  /// No description provided for @errorSelectGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your gender'**
+  String get errorSelectGender;
+
+  /// No description provided for @errorSelectGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your goal'**
+  String get errorSelectGoal;
+
+  /// No description provided for @errorSelectActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your activity level'**
+  String get errorSelectActivity;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

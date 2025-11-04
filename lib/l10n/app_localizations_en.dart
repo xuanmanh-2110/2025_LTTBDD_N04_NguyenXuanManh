@@ -280,4 +280,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get female => 'Female';
+
+  @override
+  String get yourGoal => 'Your Goal';
+
+  @override
+  String get loseWeight => 'Lose Weight';
+
+  @override
+  String get loseWeightDesc => 'Lose 0.5 kg per week';
+
+  @override
+  String get maintainWeight => 'Maintain Weight';
+
+  @override
+  String get maintainWeightDesc => 'Keep current weight';
+
+  @override
+  String get gainWeight => 'Gain Weight';
+
+  @override
+  String get gainWeightDesc => 'Gain 0.5 kg per week';
+
+  @override
+  String get activityLevel => 'Activity Level';
+
+  @override
+  String get sedentary => 'Sedentary';
+
+  @override
+  String get sedentaryDesc => 'Little or no exercise';
+
+  @override
+  String get lightlyActive => 'Lightly Active';
+
+  @override
+  String get lightlyActiveDesc => 'Light exercise 1-3 days/week';
+
+  @override
+  String get moderatelyActive => 'Moderately Active';
+
+  @override
+  String get moderatelyActiveDesc => 'Moderate exercise 3-5 days/week';
+
+  @override
+  String get veryActive => 'Very Active';
+
+  @override
+  String get veryActiveDesc => 'Hard exercise 6-7 days/week';
+
+  @override
+  String get extraActive => 'Extra Active';
+
+  @override
+  String get extraActiveDesc => 'Very hard exercise & physical job';
+
+  @override
+  String get errorEmptyAge => 'Please enter your age';
+
+  @override
+  String get errorInvalidAge => 'Invalid age';
+
+  @override
+  String get errorSelectGender => 'Please select your gender';
+
+  @override
+  String get errorSelectGoal => 'Please select your goal';
+
+  @override
+  String get errorSelectActivity => 'Please select your activity level';
 }

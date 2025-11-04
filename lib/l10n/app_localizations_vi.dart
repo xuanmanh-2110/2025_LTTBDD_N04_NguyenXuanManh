@@ -280,4 +280,73 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get female => 'Nữ';
+
+  @override
+  String get yourGoal => 'Mục tiêu của bạn';
+
+  @override
+  String get loseWeight => 'Giảm cân';
+
+  @override
+  String get loseWeightDesc => 'Giảm 0.5 kg mỗi tuần';
+
+  @override
+  String get maintainWeight => 'Duy trì cân nặng';
+
+  @override
+  String get maintainWeightDesc => 'Giữ nguyên cân nặng';
+
+  @override
+  String get gainWeight => 'Tăng cân';
+
+  @override
+  String get gainWeightDesc => 'Tăng 0.5 kg mỗi tuần';
+
+  @override
+  String get activityLevel => 'Mức độ hoạt động';
+
+  @override
+  String get sedentary => 'Ít vận động';
+
+  @override
+  String get sedentaryDesc => 'Ít hoặc không tập thể dục';
+
+  @override
+  String get lightlyActive => 'Vận động nhẹ';
+
+  @override
+  String get lightlyActiveDesc => 'Tập nhẹ 1-3 ngày/tuần';
+
+  @override
+  String get moderatelyActive => 'Vận động vừa';
+
+  @override
+  String get moderatelyActiveDesc => 'Tập vừa 3-5 ngày/tuần';
+
+  @override
+  String get veryActive => 'Vận động nhiều';
+
+  @override
+  String get veryActiveDesc => 'Tập nặng 6-7 ngày/tuần';
+
+  @override
+  String get extraActive => 'Vận động cực nhiều';
+
+  @override
+  String get extraActiveDesc => 'Tập rất nặng & công việc nặng nhọc';
+
+  @override
+  String get errorEmptyAge => 'Vui lòng nhập tuổi';
+
+  @override
+  String get errorInvalidAge => 'Tuổi không hợp lệ';
+
+  @override
+  String get errorSelectGender => 'Vui lòng chọn giới tính';
+
+  @override
+  String get errorSelectGoal => 'Vui lòng chọn mục tiêu';
+
+  @override
+  String get errorSelectActivity => 'Vui lòng chọn mức độ hoạt động';
 }

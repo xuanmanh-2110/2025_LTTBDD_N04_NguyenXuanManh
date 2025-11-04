@@ -25,16 +25,13 @@ class _JournalScreenState
     'protein': 0,
     'fat': 0,
   };
-  int _dailyCalorieGoal =
-      2000; // Default calorie goal
-  int _waterGoal =
-      2000; // Default water goal in ml
+  int _dailyCalorieGoal = 2000;
+  int _waterGoal = 2000;
   List<bool> _waterGlasses = List.filled(
     10,
     false,
-  ); // 10 glasses state
+  );
 
-  // Meals by type
   List<FoodEntry> _breakfastMeals = [];
   List<FoodEntry> _lunchMeals = [];
   List<FoodEntry> _dinnerMeals = [];
@@ -52,12 +49,8 @@ class _JournalScreenState
         .getTodayWaterIntake();
     final macros = await _storageService
         .getTodayMacros();
-
-    // Load user profile to get calculated calorie goal
     final profile = await _storageService
         .getUserProfile();
-
-    // Load meals by type
     final breakfast = await _storageService
         .getTodayFoodEntriesByMealType(
           'breakfast',
@@ -79,7 +72,6 @@ class _JournalScreenState
             profile.dailyCalorieGoal;
         _waterGoal = profile.waterGoal;
       }
-      // Calculate which glasses should be filled based on current water intake
       _updateWaterGlasses();
     });
   }
@@ -101,13 +93,8 @@ class _JournalScreenState
       _waterGlasses[index] =
           !_waterGlasses[index];
     });
-
-    // Calculate the amount per glass
     final glassAmount = (_waterGoal / 10).round();
-
-    // Save or remove water entry
     if (_waterGlasses[index]) {
-      // Glass was filled - add water
       final waterEntry = WaterEntry(
         id: '${DateTime.now().millisecondsSinceEpoch}_$index',
         amount: glassAmount,
@@ -116,13 +103,8 @@ class _JournalScreenState
       await _storageService.saveWaterEntry(
         waterEntry,
       );
-    } else {
-      // Glass was emptied - we need to remove the equivalent amount
-      // For simplicity, reload data which will recalculate glasses
-      // In a production app, you'd want to track individual glass entries
-    }
+    } else {}
 
-    // Reload to update the water total
     _loadTodayData();
   }
 
@@ -160,7 +142,6 @@ class _JournalScreenState
               crossAxisAlignment:
                   CrossAxisAlignment.start,
               children: [
-                // Tiêu đề
                 Text(
                   l10n.todayJournal,
                   style: GoogleFonts.poppins(
@@ -180,8 +161,6 @@ class _JournalScreenState
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Card tổng calo
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(
@@ -260,8 +239,6 @@ class _JournalScreenState
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                // Card Macros
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(
@@ -326,8 +303,6 @@ class _JournalScreenState
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                // Card Nước với 10 ly
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(
@@ -391,8 +366,6 @@ class _JournalScreenState
                             ),
                       ),
                       const SizedBox(height: 16),
-
-                      // Grid of 10 water glasses (2 rows x 5 columns)
                       GridView.builder(
                         shrinkWrap: true,
                         physics:
@@ -417,8 +390,6 @@ class _JournalScreenState
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                // Meals Section
                 _buildMealSection(
                   l10n.breakfast,
                   'breakfast',
@@ -442,9 +413,7 @@ class _JournalScreenState
                   Icons.nightlight,
                   Colors.indigo,
                 ),
-                const SizedBox(
-                  height: 80,
-                ), // Space for FAB
+                const SizedBox(height: 80),
               ],
             ),
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../l10n/app_localizations.dart';
+import '../models/water_entry.dart';
+import '../services/storage_service.dart';
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -12,26 +14,90 @@ class JournalScreen extends StatefulWidget {
 
 class _JournalScreenState
     extends State<JournalScreen> {
-  final int _todayCalories = 1200;
-  final int _dailyCalorieGoal = 2000;
+  final StorageService _storageService =
+      StorageService();
 
-  final Map<String, double> _todayMacros = const {
-    'carbs': 130,
-    'protein': 60,
-    'fat': 35,
+  int _todayCalories = 0;
+  int _todayWater = 0;
+  Map<String, double> _todayMacros = {
+    'carbs': 0,
+    'protein': 0,
+    'fat': 0,
   };
 
-  final int _todayWater = 1200;
-  final int _waterGoal = 2000;
+  int _dailyCalorieGoal = 2000;
+  int _waterGoal = 2000;
+  List<bool> _waterGlasses = List<bool>.filled(
+    10,
+    false,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTodayData();
+  }
+
+  Future<void> _loadTodayData() async {
+    final calories = await _storageService
+        .getTodayCalorieIntake();
+    final water = await _storageService
+        .getTodayWaterIntake();
+    final macros = await _storageService
+        .getTodayMacros();
+    final profile = await _storageService
+        .getUserProfile();
+
+    setState(() {
+      _todayCalories = calories;
+      _todayWater = water;
+      _todayMacros = macros;
+      if (profile != null) {
+        _dailyCalorieGoal =
+            profile.dailyCalorieGoal;
+        _waterGoal = profile.waterGoal;
+      }
+      _updateWaterGlasses();
+    });
+  }
+
+  void _updateWaterGlasses() {
+    final glassAmount = _waterGoal / 10;
+    final filledGlasses =
+        (_todayWater / glassAmount).floor();
+    _waterGlasses = List.generate(
+      10,
+      (i) => i < filledGlasses,
+    );
+  }
+
+  Future<void> _toggleWaterGlass(
+    int index,
+  ) async {
+    setState(() {
+      _waterGlasses[index] =
+          !_waterGlasses[index];
+    });
+
+    final glassAmount = (_waterGoal / 10).round();
+
+    if (_waterGlasses[index]) {
+      final waterEntry = WaterEntry(
+        id: '${DateTime.now().millisecondsSinceEpoch}_$index',
+        amount: glassAmount,
+        timestamp: DateTime.now(),
+      );
+      await _storageService.saveWaterEntry(
+        waterEntry,
+      );
+    } else {}
+
+    _loadTodayData();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
-    final perGlass = (_waterGoal / 10);
-    final filledGlasses = (_todayWater / perGlass)
-        .floor()
-        .clamp(0, 10);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5FFF5),
@@ -283,46 +349,10 @@ class _JournalScreenState
                         itemCount: 10,
                         itemBuilder:
                             (context, index) {
-                              final isFilled =
-                                  index <
-                                  filledGlasses;
-                              return _WaterGlassTile(
-                                isFilled:
-                                    isFilled,
-                                mlPerGlass:
-                                    perGlass
-                                        .round(),
+                              return _buildWaterGlass(
+                                index,
                               );
                             },
-                      ),
-
-                      const SizedBox(height: 12),
-                      Row(
-                        children: const [
-                          Expanded(
-                            child:
-                                _DisabledOutlined(
-                                  text:
-                                      'Goal 1.5L',
-                                ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child:
-                                _DisabledOutlined(
-                                  text:
-                                      'Goal 2.0L',
-                                ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child:
-                                _DisabledOutlined(
-                                  text:
-                                      'Goal 2.5L',
-                                ),
-                          ),
-                        ],
                       ),
                     ],
                   ),
@@ -337,72 +367,21 @@ class _JournalScreenState
     );
   }
 
-  Widget _buildMacroBar(
-    String name,
-    double current,
-    double goal,
-    Color color,
-  ) {
-    final pct = (current / goal).clamp(0.0, 1.0);
-    return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              name,
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              '${current.toStringAsFixed(0)}g / ${goal.toStringAsFixed(0)}g',
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        LinearProgressIndicator(
-          value: pct,
-          backgroundColor: Colors.grey[200],
-          valueColor:
-              AlwaysStoppedAnimation<Color>(
-                color,
-              ),
-          minHeight: 6,
-        ),
-      ],
-    );
-  }
-}
+  Widget _buildWaterGlass(int index) {
+    final isFilled = _waterGlasses[index];
+    final glassAmount = (_waterGoal / 10).round();
 
-class _WaterGlassTile extends StatelessWidget {
-  final bool isFilled;
-  final int mlPerGlass;
-
-  const _WaterGlassTile({
-    required this.isFilled,
-    required this.mlPerGlass,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
+    return GestureDetector(
+      onTap: () => _toggleWaterGlass(index),
       child: Column(
         mainAxisAlignment:
             MainAxisAlignment.center,
         children: [
           AnimatedContainer(
             duration: const Duration(
-              milliseconds: 0,
+              milliseconds: 300,
             ),
+            curve: Curves.easeInOut,
             width: 45,
             height: 45,
             decoration: BoxDecoration(
@@ -429,7 +408,7 @@ class _WaterGlassTile extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '${mlPerGlass}ml',
+            '${glassAmount}ml',
             style: GoogleFonts.poppins(
               fontSize: 10,
               color: Colors.blue[700],
@@ -440,17 +419,53 @@ class _WaterGlassTile extends StatelessWidget {
       ),
     );
   }
-}
 
-class _DisabledOutlined extends StatelessWidget {
-  final String text;
-  const _DisabledOutlined({required this.text});
+  Widget _buildMacroBar(
+    String name,
+    double current,
+    double goal,
+    Color color,
+  ) {
+    final percentage = (current / goal).clamp(
+      0.0,
+      1.0,
+    );
 
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: null,
-      child: Text(text),
+    return Column(
+      crossAxisAlignment:
+          CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              name,
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              '${current.toStringAsFixed(0)}g / ${goal.toStringAsFixed(0)}g',
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        LinearProgressIndicator(
+          value: percentage,
+          backgroundColor: Colors.grey[200],
+          valueColor:
+              AlwaysStoppedAnimation<Color>(
+                color,
+              ),
+          minHeight: 6,
+        ),
+      ],
     );
   }
 }

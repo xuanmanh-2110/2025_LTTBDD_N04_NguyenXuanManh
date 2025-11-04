@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
+import '../services/storage_service.dart';
 import '../main.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +18,9 @@ class _LoginScreenState
       TextEditingController();
   final _passwordController =
       TextEditingController();
+  final _authService = AuthService();
+  final _storageService = StorageService();
+  bool _isLoading = false;
   bool _obscurePassword = true;
 
   @override
@@ -25,38 +30,78 @@ class _LoginScreenState
     super.dispose();
   }
 
-  void _submitDemo() {
-    final form = _formKey.currentState;
-    if (form == null || !form.validate()) return;
+  Future<void> _login() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
-    final isVietnamese =
-        Localizations.localeOf(
-          context,
-        ).languageCode ==
-        'vi';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          isVietnamese
-              ? 'chỉ kiểm tra hợp lệ, chưa đăng nhập.'
-              : 'validated only, no sign-in.',
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
+
+    final success = await _authService.login(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
     );
+
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
+    if (success) {
+      final profile = await _storageService
+          .getUserProfile();
+
+      if (mounted) {
+        if (profile != null) {
+          Navigator.of(
+            context,
+          ).pushReplacementNamed('/main');
+        } else {
+          Navigator.of(
+            context,
+          ).pushReplacementNamed('/welcome');
+        }
+      }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              Localizations.localeOf(
+                        context,
+                      ).languageCode ==
+                      'vi'
+                  ? 'Email hoặc mật khẩu không đúng'
+                  : 'Invalid email or password',
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
-  // Đổi ngôn ngữ
-  void _changeLanguage(String languageCode) {
-    WidgetsBinding.instance.addPostFrameCallback((
-      _,
-    ) {
-      if (mounted) {
-        MyApp.of(
-          context,
-        )?.setLocale(Locale(languageCode));
-      }
-    });
+  Future<void> _changeLanguage(
+    String languageCode,
+  ) async {
+    await _authService.setLanguage(languageCode);
+    if (mounted) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) {
+            if (mounted) {
+              MyApp.of(
+                context,
+              )?.setLocale(Locale(languageCode));
+            }
+          });
+    }
   }
 
   @override
@@ -76,7 +121,6 @@ class _LoginScreenState
             crossAxisAlignment:
                 CrossAxisAlignment.stretch,
             children: [
-              // Toggle VI/EN
               Row(
                 mainAxisAlignment:
                     MainAxisAlignment.end,
@@ -91,7 +135,9 @@ class _LoginScreenState
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black
-                              .withOpacity(0.1),
+                              .withValues(
+                                alpha: 0.1,
+                              ),
                           blurRadius: 8,
                           offset: const Offset(
                             0,
@@ -211,15 +257,13 @@ class _LoginScreenState
                 ],
               ),
               const SizedBox(height: 24),
-
-              // Logo
               Container(
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
                   color: const Color(
                     0xFF4CAF50,
-                  ).withOpacity(0.1),
+                  ).withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -229,8 +273,6 @@ class _LoginScreenState
                 ),
               ),
               const SizedBox(height: 32),
-
-              // Title
               Text(
                 isVietnamese
                     ? 'Đăng Nhập'
@@ -254,8 +296,6 @@ class _LoginScreenState
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-
-              // Form
               Form(
                 key: _formKey,
                 child: Column(
@@ -265,16 +305,6 @@ class _LoginScreenState
                           _emailController,
                       keyboardType: TextInputType
                           .emailAddress,
-                      textInputAction:
-                          TextInputAction.next,
-                      autofillHints: const [
-                        AutofillHints.username,
-                        AutofillHints.email,
-                      ],
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(
-                            context,
-                          ).nextFocus(),
                       decoration: InputDecoration(
                         labelText: 'Email',
                         hintText: isVietnamese
@@ -294,18 +324,14 @@ class _LoginScreenState
                       ),
                       validator: (value) {
                         if (value == null ||
-                            value
-                                .trim()
-                                .isEmpty) {
+                            value.isEmpty) {
                           return isVietnamese
                               ? 'Vui lòng nhập email'
                               : 'Please enter your email';
                         }
-                        final v = value.trim();
-                        final ok = RegExp(
-                          r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-                        ).hasMatch(v);
-                        if (!ok) {
+                        if (!value.contains(
+                          '@',
+                        )) {
                           return isVietnamese
                               ? 'Email không hợp lệ'
                               : 'Invalid email';
@@ -319,13 +345,6 @@ class _LoginScreenState
                           _passwordController,
                       obscureText:
                           _obscurePassword,
-                      textInputAction:
-                          TextInputAction.done,
-                      autofillHints: const [
-                        AutofillHints.password,
-                      ],
-                      onFieldSubmitted: (_) =>
-                          _submitDemo(),
                       decoration: InputDecoration(
                         labelText: isVietnamese
                             ? 'Mật khẩu'
@@ -337,9 +356,6 @@ class _LoginScreenState
                           Icons.lock_outline,
                         ),
                         suffixIcon: IconButton(
-                          tooltip: isVietnamese
-                              ? 'Hiện/ẩn mật khẩu'
-                              : 'Show/hide password',
                           icon: Icon(
                             _obscurePassword
                                 ? Icons
@@ -347,10 +363,12 @@ class _LoginScreenState
                                 : Icons
                                       .visibility_off_outlined,
                           ),
-                          onPressed: () => setState(
-                            () => _obscurePassword =
-                                !_obscurePassword,
-                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword =
+                                  !_obscurePassword;
+                            });
+                          },
                         ),
                         border: OutlineInputBorder(
                           borderRadius:
@@ -376,7 +394,9 @@ class _LoginScreenState
                       width: double.infinity,
                       height: 54,
                       child: ElevatedButton(
-                        onPressed: _submitDemo,
+                        onPressed: _isLoading
+                            ? null
+                            : _login,
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color(
@@ -392,24 +412,35 @@ class _LoginScreenState
                           ),
                           elevation: 0,
                         ),
-                        child: Text(
-                          isVietnamese
-                              ? 'Đăng Nhập'
-                              : 'Login',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight:
-                                FontWeight.w600,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child:
+                                    CircularProgressIndicator(
+                                      color: Colors
+                                          .white,
+                                      strokeWidth:
+                                          2,
+                                    ),
+                              )
+                            : Text(
+                                isVietnamese
+                                    ? 'Đăng Nhập'
+                                    : 'Login',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight:
+                                      FontWeight
+                                          .w600,
+                                ),
+                              ),
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
-
-              // Register link
               Row(
                 mainAxisAlignment:
                     MainAxisAlignment.center,
@@ -424,14 +455,14 @@ class _LoginScreenState
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.of(
-                      context,
-                    ).pushNamed('/register'),
-                    child: Text(
-                      isVietnamese
-                          ? 'Đăng ký ngay'
-                          : 'Register Now',
-                      style: const TextStyle(
+                    onTap: () {
+                      Navigator.of(
+                        context,
+                      ).pushNamed('/register');
+                    },
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(
                         color: Color(0xFF4CAF50),
                         fontSize: 14,
                         fontWeight:

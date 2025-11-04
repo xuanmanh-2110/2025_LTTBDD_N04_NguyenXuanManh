@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
 import '../main.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -11,76 +12,92 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState
     extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController =
       TextEditingController();
   final _passwordController =
       TextEditingController();
-  final _confirmController =
+  final _confirmPasswordController =
       TextEditingController();
-
-  bool _obscure1 = true;
-  bool _obscure2 = true;
-
-  bool _canSubmit = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.addListener(_revalidate);
-    _emailController.addListener(_revalidate);
-    _passwordController.addListener(_revalidate);
-    _confirmController.addListener(_revalidate);
-  }
+  final _authService = AuthService();
+  bool _isLoading = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  void _revalidate() {
-    final nameOk = _nameController.text
-        .trim()
-        .isNotEmpty;
+  Future<void> _register() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
-    final email = _emailController.text.trim();
-    final emailOk = RegExp(
-      r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-    ).hasMatch(email);
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
 
-    final pass = _passwordController.text;
-    final passOk = pass.length >= 6;
+    final success = await _authService.register(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      name: _nameController.text.trim(),
+    );
 
-    final confirmOk =
-        _confirmController.text == pass;
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
 
-    final ok =
-        nameOk && emailOk && passOk && confirmOk;
-    if (_canSubmit != ok && mounted) {
-      setState(() => _canSubmit = ok);
+    if (success) {
+      if (mounted) {
+        Navigator.of(
+          context,
+        ).pushReplacementNamed('/welcome');
+      }
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(
+          SnackBar(
+            content: Text(
+              Localizations.localeOf(
+                        context,
+                      ).languageCode ==
+                      'vi'
+                  ? 'Email đã được sử dụng'
+                  : 'Email already exists',
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
-  void _submitDemo() {
-    final isVietnamese =
-        Localizations.localeOf(
-          context,
-        ).languageCode ==
-        'vi';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          isVietnamese
-              ? 'kiểm tra hợp lệ, chưa tạo tài khoản.'
-              : 'validated only, no account created.',
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+  Future<void> _changeLanguage(
+    String languageCode,
+  ) async {
+    await _authService.setLanguage(languageCode);
+    if (mounted) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) {
+            if (mounted) {
+              MyApp.of(
+                context,
+              )?.setLocale(Locale(languageCode));
+            }
+          });
+    }
   }
 
   @override
@@ -94,12 +111,16 @@ class _RegisterScreenState
     return Scaffold(
       backgroundColor: const Color(0xFFF5FFF5),
       appBar: AppBar(
-        title: Text(
-          isVietnamese ? 'Đăng ký' : 'Register',
-        ),
-        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color(0xFF2D2D2D),
+          ),
+          onPressed: () =>
+              Navigator.of(context).pop(),
+        ),
         actions: [
           Container(
             margin: const EdgeInsets.only(
@@ -125,10 +146,8 @@ class _RegisterScreenState
             child: Row(
               children: [
                 InkWell(
-                  onTap: () => MyApp.of(context)
-                      ?.setLocale(
-                        const Locale('vi'),
-                      ),
+                  onTap: () =>
+                      _changeLanguage('vi'),
                   borderRadius:
                       const BorderRadius.horizontal(
                         left: Radius.circular(20),
@@ -171,10 +190,8 @@ class _RegisterScreenState
                   color: Colors.grey[300],
                 ),
                 InkWell(
-                  onTap: () => MyApp.of(context)
-                      ?.setLocale(
-                        const Locale('en'),
-                      ),
+                  onTap: () =>
+                      _changeLanguage('en'),
                   borderRadius:
                       const BorderRadius.horizontal(
                         right: Radius.circular(
@@ -219,10 +236,9 @@ class _RegisterScreenState
           ),
         ],
       ),
-
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment:
                 CrossAxisAlignment.stretch,
@@ -245,10 +261,10 @@ class _RegisterScreenState
               const SizedBox(height: 32),
               Text(
                 isVietnamese
-                    ? 'Tạo tài khoản'
-                    : 'Create account',
+                    ? 'Đăng Ký'
+                    : 'Register',
                 style: const TextStyle(
-                  fontSize: 28,
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF2D2D2D),
                 ),
@@ -257,159 +273,254 @@ class _RegisterScreenState
               const SizedBox(height: 8),
               Text(
                 isVietnamese
-                    ? 'Điền thông tin để tiếp tục'
-                    : 'Fill in your details to continue',
+                    ? 'Tạo tài khoản mới'
+                    : 'Create a new account',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.grey[600],
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 32),
-              TextField(
-                controller: _nameController,
-                textInputAction:
-                    TextInputAction.next,
-                decoration: InputDecoration(
-                  labelText: isVietnamese
-                      ? 'Họ và tên'
-                      : 'Full name',
-                  prefixIcon: const Icon(
-                    Icons.person_outline,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _emailController,
-                keyboardType:
-                    TextInputType.emailAddress,
-                textInputAction:
-                    TextInputAction.next,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: const Icon(
-                    Icons.email_outlined,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: _obscure1,
-                textInputAction:
-                    TextInputAction.next,
-                decoration: InputDecoration(
-                  labelText: isVietnamese
-                      ? 'Mật khẩu'
-                      : 'Password',
-                  prefixIcon: const Icon(
-                    Icons.lock_outline,
-                  ),
-                  suffixIcon: IconButton(
-                    tooltip: isVietnamese
-                        ? 'Hiện/ẩn mật khẩu'
-                        : 'Show/hide password',
-                    icon: Icon(
-                      _obscure1
-                          ? Icons
-                                .visibility_outlined
-                          : Icons
-                                .visibility_off_outlined,
+              const SizedBox(height: 40),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: isVietnamese
+                            ? 'Họ và tên'
+                            : 'Full Name',
+                        hintText: isVietnamese
+                            ? 'Nhập họ và tên'
+                            : 'Enter your full name',
+                        prefixIcon: const Icon(
+                          Icons.person_outline,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                                12,
+                              ),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return isVietnamese
+                              ? 'Vui lòng nhập họ và tên'
+                              : 'Please enter your name';
+                        }
+                        return null;
+                      },
                     ),
-                    onPressed: () => setState(
-                      () =>
-                          _obscure1 = !_obscure1,
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller:
+                          _emailController,
+                      keyboardType: TextInputType
+                          .emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        hintText: isVietnamese
+                            ? 'Nhập email của bạn'
+                            : 'Enter your email',
+                        prefixIcon: const Icon(
+                          Icons.email_outlined,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                                12,
+                              ),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return isVietnamese
+                              ? 'Vui lòng nhập email'
+                              : 'Please enter your email';
+                        }
+                        if (!value.contains(
+                          '@',
+                        )) {
+                          return isVietnamese
+                              ? 'Email không hợp lệ'
+                              : 'Invalid email';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _confirmController,
-                obscureText: _obscure2,
-                textInputAction:
-                    TextInputAction.done,
-                decoration: InputDecoration(
-                  labelText: isVietnamese
-                      ? 'Xác nhận mật khẩu'
-                      : 'Confirm password',
-                  prefixIcon: const Icon(
-                    Icons.lock_outline,
-                  ),
-                  suffixIcon: IconButton(
-                    tooltip: isVietnamese
-                        ? 'Hiện/ẩn mật khẩu'
-                        : 'Show/hide password',
-                    icon: Icon(
-                      _obscure2
-                          ? Icons
-                                .visibility_outlined
-                          : Icons
-                                .visibility_off_outlined,
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller:
+                          _passwordController,
+                      obscureText:
+                          _obscurePassword,
+                      decoration: InputDecoration(
+                        labelText: isVietnamese
+                            ? 'Mật khẩu'
+                            : 'Password',
+                        hintText: isVietnamese
+                            ? 'Nhập mật khẩu'
+                            : 'Enter your password',
+                        prefixIcon: const Icon(
+                          Icons.lock_outline,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons
+                                      .visibility_outlined
+                                : Icons
+                                      .visibility_off_outlined,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword =
+                                  !_obscurePassword;
+                            });
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                                12,
+                              ),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return isVietnamese
+                              ? 'Vui lòng nhập mật khẩu'
+                              : 'Please enter your password';
+                        }
+                        if (value.length < 6) {
+                          return isVietnamese
+                              ? 'Mật khẩu phải có ít nhất 6 ký tự'
+                              : 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
                     ),
-                    onPressed: () => setState(
-                      () =>
-                          _obscure2 = !_obscure2,
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller:
+                          _confirmPasswordController,
+                      obscureText:
+                          _obscureConfirmPassword,
+                      decoration: InputDecoration(
+                        labelText: isVietnamese
+                            ? 'Xác nhận mật khẩu'
+                            : 'Confirm Password',
+                        hintText: isVietnamese
+                            ? 'Nhập lại mật khẩu'
+                            : 'Re-enter your password',
+                        prefixIcon: const Icon(
+                          Icons.lock_outline,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureConfirmPassword
+                                ? Icons
+                                      .visibility_outlined
+                                : Icons
+                                      .visibility_off_outlined,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
+                            });
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                                12,
+                              ),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty) {
+                          return isVietnamese
+                              ? 'Vui lòng xác nhận mật khẩu'
+                              : 'Please confirm your password';
+                        }
+                        if (value !=
+                            _passwordController
+                                .text) {
+                          return isVietnamese
+                              ? 'Mật khẩu không khớp'
+                              : 'Passwords do not match';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 54,
+                      child: ElevatedButton(
+                        onPressed: _isLoading
+                            ? null
+                            : _register,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(
+                                0xFF4CAF50,
+                              ),
+                          foregroundColor:
+                              Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                                  27,
+                                ),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child:
+                                    CircularProgressIndicator(
+                                      color: Colors
+                                          .white,
+                                      strokeWidth:
+                                          2,
+                                    ),
+                              )
+                            : Text(
+                                isVietnamese
+                                    ? 'Đăng Ký'
+                                    : 'Register',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight:
+                                      FontWeight
+                                          .w600,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 54,
-                child: ElevatedButton(
-                  onPressed: _submitDemo,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(
-                      0xFF4CAF50,
-                    ),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(
-                            27,
-                          ),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    isVietnamese
-                        ? 'Đăng ký'
-                        : 'Register',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment:
                     MainAxisAlignment.center,

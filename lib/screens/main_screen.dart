@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../l10n/app_localizations.dart';
 import 'journal_screen.dart';
 import 'about_screen.dart';
+import 'personal_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<Widget> screens = [
       const JournalScreen(),
       const AboutScreen(),
+      const PersonalScreen(),
     ];
 
     return Scaffold(

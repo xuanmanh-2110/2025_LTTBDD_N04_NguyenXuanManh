@@ -111,6 +111,13 @@ class AuthService {
     return currentUser != null;
   }
 
+  // Đăng xuất
+  Future<void> logout() async {
+    final prefs =
+        await SharedPreferences.getInstance();
+    await prefs.remove(_currentUserKey);
+  }
+
   Future<String> getCurrentLanguage() async {
     final prefs =
         await SharedPreferences.getInstance();

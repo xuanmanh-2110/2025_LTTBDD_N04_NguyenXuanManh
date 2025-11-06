@@ -232,4 +232,115 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorSelectActivity => 'Please select your activity level';
+
+  @override
+  String get addFood => 'Add Food';
+
+  @override
+  String get breakfast => 'Breakfast';
+
+  @override
+  String get lunch => 'Lunch';
+
+  @override
+  String get dinner => 'Dinner';
+
+  @override
+  String get addMeal => 'Add Meal';
+
+  @override
+  String get aboutProject => 'About Project';
+
+  @override
+  String get aboutProjectDesc => 'Calorie Tracker is a comprehensive health management application that helps you track your daily calorie intake, water consumption, and BMI index. The app is designed with a user-friendly interface and provides personalized features to help you achieve your health goals.';
+
+  @override
+  String get trackCalories => 'Track Calories';
+
+  @override
+  String get mainFeatures => 'Main Features';
+
+  @override
+  String get trackCaloriesDesc => 'Record and calculate your daily calorie intake';
+
+  @override
+  String get waterReminder => 'Water Reminder';
+
+  @override
+  String get waterReminderDesc => 'Track your daily water intake';
+
+  @override
+  String get calculateBMI => 'Calculate BMI';
+
+  @override
+  String get calculateBMIDesc => 'Monitor your BMI and health status';
+
+  @override
+  String get personalizedGoals => 'Personalized Goals';
+
+  @override
+  String get personalizedGoalsDesc => 'Set and track calorie goals based on your personal information';
+
+  @override
+  String get developer => 'Developer';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get studentId => 'Student ID';
+
+  @override
+  String get className => 'Class';
+
+  @override
+  String get university => 'University';
+
+  @override
+  String get universityName => 'Phenikaa University';
+
+  @override
+  String get techStack => 'Technology Stack';
+
+  @override
+  String get localDataStorage => 'Local Data Storage';
+
+  @override
+  String get typography => 'Typography';
+
+  @override
+  String get uiFramework => 'UI Framework';
+
+  @override
+  String get madeWithLove => 'Nguyen Xuan Manh';
+
+  @override
+  String get updateWeightTitle => 'Update Weight';
+
+  @override
+  String get updateWaterGoalTitle => 'Update Water Goal';
+
+  @override
+  String get waterGoalLabel => 'Water Goal (ml)';
+
+  @override
+  String get lastUpdated => 'Last Updated';
+
+  @override
+  String get bmi => 'BMI';
+
+  @override
+  String get yourBMI => 'Your BMI';
+
+  @override
+  String get updateWeight => 'Update Weight';
+
+  @override
+  String get waterGoal => 'Water Goal';
+
+  @override
+  String get shouldDrinkDaily => 'Daily Recommendation';
+
+  @override
+  String get customizeGoal => 'Customize Goal';
 }

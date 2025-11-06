@@ -544,6 +544,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select your activity level'**
   String get errorSelectActivity;
+
+  /// No description provided for @addFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Food'**
+  String get addFood;
+
+  /// No description provided for @breakfast.
+  ///
+  /// In en, this message translates to:
+  /// **'Breakfast'**
+  String get breakfast;
+
+  /// No description provided for @lunch.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch'**
+  String get lunch;
+
+  /// No description provided for @dinner.
+  ///
+  /// In en, this message translates to:
+  /// **'Dinner'**
+  String get dinner;
+
+  /// No description provided for @addMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Meal'**
+  String get addMeal;
+
+  /// No description provided for @aboutProject.
+  ///
+  /// In en, this message translates to:
+  /// **'About Project'**
+  String get aboutProject;
+
+  /// No description provided for @aboutProjectDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Calorie Tracker is a comprehensive health management application that helps you track your daily calorie intake, water consumption, and BMI index. The app is designed with a user-friendly interface and provides personalized features to help you achieve your health goals.'**
+  String get aboutProjectDesc;
+
+  /// No description provided for @trackCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Calories'**
+  String get trackCalories;
+
+  /// No description provided for @mainFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Features'**
+  String get mainFeatures;
+
+  /// No description provided for @trackCaloriesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record and calculate your daily calorie intake'**
+  String get trackCaloriesDesc;
+
+  /// No description provided for @waterReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Reminder'**
+  String get waterReminder;
+
+  /// No description provided for @waterReminderDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your daily water intake'**
+  String get waterReminderDesc;
+
+  /// No description provided for @calculateBMI.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate BMI'**
+  String get calculateBMI;
+
+  /// No description provided for @calculateBMIDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor your BMI and health status'**
+  String get calculateBMIDesc;
+
+  /// No description provided for @personalizedGoals.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized Goals'**
+  String get personalizedGoals;
+
+  /// No description provided for @personalizedGoalsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set and track calorie goals based on your personal information'**
+  String get personalizedGoalsDesc;
+
+  /// No description provided for @developer.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer'**
+  String get developer;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @studentId.
+  ///
+  /// In en, this message translates to:
+  /// **'Student ID'**
+  String get studentId;
+
+  /// No description provided for @className.
+  ///
+  /// In en, this message translates to:
+  /// **'Class'**
+  String get className;
+
+  /// No description provided for @university.
+  ///
+  /// In en, this message translates to:
+  /// **'University'**
+  String get university;
+
+  /// No description provided for @universityName.
+  ///
+  /// In en, this message translates to:
+  /// **'Phenikaa University'**
+  String get universityName;
+
+  /// No description provided for @techStack.
+  ///
+  /// In en, this message translates to:
+  /// **'Technology Stack'**
+  String get techStack;
+
+  /// No description provided for @localDataStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Data Storage'**
+  String get localDataStorage;
+
+  /// No description provided for @typography.
+  ///
+  /// In en, this message translates to:
+  /// **'Typography'**
+  String get typography;
+
+  /// No description provided for @uiFramework.
+  ///
+  /// In en, this message translates to:
+  /// **'UI Framework'**
+  String get uiFramework;
+
+  /// No description provided for @madeWithLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Nguyen Xuan Manh'**
+  String get madeWithLove;
+
+  /// No description provided for @updateWeightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Weight'**
+  String get updateWeightTitle;
+
+  /// No description provided for @updateWaterGoalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Water Goal'**
+  String get updateWaterGoalTitle;
+
+  /// No description provided for @waterGoalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Goal (ml)'**
+  String get waterGoalLabel;
+
+  /// No description provided for @lastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get lastUpdated;
+
+  /// No description provided for @bmi.
+  ///
+  /// In en, this message translates to:
+  /// **'BMI'**
+  String get bmi;
+
+  /// No description provided for @yourBMI.
+  ///
+  /// In en, this message translates to:
+  /// **'Your BMI'**
+  String get yourBMI;
+
+  /// No description provided for @updateWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Weight'**
+  String get updateWeight;
+
+  /// No description provided for @waterGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Goal'**
+  String get waterGoal;
+
+  /// No description provided for @shouldDrinkDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Recommendation'**
+  String get shouldDrinkDaily;
+
+  /// No description provided for @customizeGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize Goal'**
+  String get customizeGoal;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

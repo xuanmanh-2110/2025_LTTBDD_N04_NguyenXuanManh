@@ -232,4 +232,115 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get errorSelectActivity => 'Vui lòng chọn mức độ hoạt động';
+
+  @override
+  String get addFood => 'Thêm món ăn';
+
+  @override
+  String get breakfast => 'Bữa sáng';
+
+  @override
+  String get lunch => 'Bữa trưa';
+
+  @override
+  String get dinner => 'Bữa tối';
+
+  @override
+  String get addMeal => 'Thêm món';
+
+  @override
+  String get aboutProject => 'Về dự án';
+
+  @override
+  String get aboutProjectDesc => 'Ứng dụng Calorie Tracker là một công cụ quản lý sức khỏe toàn diện, giúp bạn theo dõi lượng calo hàng ngày, lượng nước uống, và chỉ số BMI. Ứng dụng được thiết kế với giao diện thân thiện, dễ sử dụng và cung cấp các tính năng cá nhân hóa để giúp bạn đạt được mục tiêu sức khỏe của mình.';
+
+  @override
+  String get trackCalories => 'Theo dõi calo';
+
+  @override
+  String get mainFeatures => 'Tính năng chính';
+
+  @override
+  String get trackCaloriesDesc => 'Ghi nhận và tính toán lượng calo nạp vào';
+
+  @override
+  String get waterReminder => 'Nhắc uống nước';
+
+  @override
+  String get waterReminderDesc => 'Theo dõi lượng nước uống hàng ngày';
+
+  @override
+  String get calculateBMI => 'Tính BMI';
+
+  @override
+  String get calculateBMIDesc => 'Theo dõi chỉ số BMI và sức khỏe';
+
+  @override
+  String get personalizedGoals => 'Mục tiêu cá nhân hóa';
+
+  @override
+  String get personalizedGoalsDesc => 'Thiết lập và theo dõi mục tiêu calo dựa trên thông tin cá nhân';
+
+  @override
+  String get developer => 'Nhà phát triển';
+
+  @override
+  String get name => 'Họ và tên';
+
+  @override
+  String get studentId => 'Mã sinh viên';
+
+  @override
+  String get className => 'Lớp';
+
+  @override
+  String get university => 'Trường';
+
+  @override
+  String get universityName => 'Đại học Phenikaa';
+
+  @override
+  String get techStack => 'Công nghệ sử dụng';
+
+  @override
+  String get localDataStorage => 'Lưu trữ dữ liệu cục bộ';
+
+  @override
+  String get typography => 'Font chữ';
+
+  @override
+  String get uiFramework => 'Khung giao diện';
+
+  @override
+  String get madeWithLove => 'Nguyen Xuan Manh';
+
+  @override
+  String get updateWeightTitle => 'Cập nhật cân nặng';
+
+  @override
+  String get updateWaterGoalTitle => 'Cập nhật mục tiêu nước';
+
+  @override
+  String get waterGoalLabel => 'Mục tiêu nước (ml)';
+
+  @override
+  String get lastUpdated => 'Lần cuối cập nhật';
+
+  @override
+  String get bmi => 'BMI';
+
+  @override
+  String get yourBMI => 'BMI của bạn';
+
+  @override
+  String get updateWeight => 'Cập nhật cân nặng';
+
+  @override
+  String get waterGoal => 'Mục tiêu nước';
+
+  @override
+  String get shouldDrinkDaily => 'Nên uống mỗi ngày';
+
+  @override
+  String get customizeGoal => 'Tùy chỉnh mục tiêu';
 }
